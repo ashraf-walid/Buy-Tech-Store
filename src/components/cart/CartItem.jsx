@@ -34,12 +34,12 @@ export default function CartItem({
     if (inputValue === 0) {
       setShowConfirmDialog(true);
     } else {
-      updateQuantityCartItem(id, inputValue);
+      updateQuantityCartItem(_id, inputValue);
     }
   };
 
   const handleRemove = () => {
-    removeFromCart(id);
+    removeFromCart(_id);
   };
 
   return (
@@ -51,7 +51,7 @@ export default function CartItem({
       >
         <Link href={`/ProductDetails/${_id}`} className="shrink-0 relative group">
           <Image
-            src={ image?.url? image.url : "" }
+            src={image?.url ? image.url : ""}
             alt={name}
             width={100}
             height={100}
@@ -90,7 +90,7 @@ export default function CartItem({
 
           <div className="mt-4 flex items-center gap-2">
             <button
-              onClick={() => DecreaseTheQuantityOfProduct(id)}
+              onClick={() => DecreaseTheQuantityOfProduct(_id)}
               className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors disabled:opacity-50"
               disabled={quantity <= 1}
             >
@@ -107,7 +107,7 @@ export default function CartItem({
             />
 
             <button
-              onClick={() => addToCart(id)}
+              onClick={() => addToCart(_id)}
               className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
             >
               <Plus className="w-4 h-4" />
@@ -121,7 +121,7 @@ export default function CartItem({
           setShowConfirmDialog(false);
           if (inputValue === 0) {
             setInputValue(1);
-            updateQuantityCartItem(id, 1);
+            updateQuantityCartItem(_id, 1);
           }
         }}
         onConfirm={handleRemove}

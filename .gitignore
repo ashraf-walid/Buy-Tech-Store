@@ -45,3 +45,5 @@ next-env.d.ts
 scripts
 
 cspell.json
+# clerk configuration (can include secrets)
+/.clerk/

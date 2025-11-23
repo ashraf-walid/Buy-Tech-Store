@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import AddProduct from '@/app/dashboard/AddProduct';
 import EditProductList from '@/app/dashboard/EditProductList';
 import ContactMessages from '@/app/dashboard/ContactMessages';
+import CouponManagement from '@/app/dashboard/CouponManagement';
+import ManageOrders from '@/app/dashboard/manageOrders/manageOrders';
 import {
   PackageSearch,
   PackagePlus,
@@ -91,6 +93,10 @@ export default function DashboardClient() {
         return <EditProductList />;
       case 'contactMessages':
         return <ContactMessages />;
+      case 'CouponManagement':
+        return <CouponManagement />;
+      case 'ManageOrders':
+        return <ManageOrders />;
       default:
         return null;
     }

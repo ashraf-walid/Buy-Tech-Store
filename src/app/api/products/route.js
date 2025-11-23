@@ -18,7 +18,7 @@ export async function GET() {
 
   // 3) Save into cache
   setCache("all_products", products);
-  console.log("✔ products added in cache successfuly")
+  console.log("✔️✔️✔️ products added in cache successfuly")
 
   return new Response(JSON.stringify(products), { status: 200 });
 }

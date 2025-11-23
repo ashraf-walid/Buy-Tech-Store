@@ -1,23 +1,27 @@
 import { NextResponse } from "next/server";
 import { jwtVerify } from 'jose';
 
-console.log("🚀 MIDDLEWARE FILE LOADED");
+// import { clerkMiddleware } from "@clerk/nextjs/server";
+// export default clerkMiddleware();
 
 export async function middleware(req) {
 
   console.log("🔵🔥 MIDDLEWARE FIRED → pathname:", req.nextUrl.pathname);
 
-  // Skip middleware for login page
-  if (req.nextUrl.pathname.startsWith('/login')) {
+  const protectedRoutes = ['/dashboard', '/editor-panel', '/reports'];
+  const isProtectedRoute = protectedRoutes.some(route => req.nextUrl.pathname.startsWith(route));
+
+  // If it's not a protected route, let it pass (this allows /, /login, /api/auth/login, etc.)
+  if (!isProtectedRoute) {
     return NextResponse.next();
   }
 
   const token = req.cookies.get("auth")?.value;
   console.log("🎯 the value of token from middleware file is:", token ? token.substring(0, 20) + "..." : "No token");
 
-  // If no token and not on login page, redirect to login
+  // If no token and trying to access protected route, redirect to login
   if (!token) {
-    console.log("No token found, redirecting to login");
+    console.log("No token found for protected route, redirecting to login");
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
@@ -56,5 +60,6 @@ export const config = {
     "/_next/data/:path*/dashboard/:path*",
     "/_next/data/:path*/editor-panel/:path*",
     "/_next/data/:path*/reports/:path*",
+    // Removed the catch-all pattern to avoid intercepting public routes
   ],
 };

@@ -29,14 +29,13 @@ export default function CartSummary({ subtotal, itemCount }) {
         
         <div className="flex flex-col gap-3 pt-4">
           <Link
-            // href="/Checkout"
-            href="/"
+            href="/Checkout"
             className="w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition duration-300 text-center flex items-center justify-center group"
           >
             إتمام الشراء
             <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
           </Link>
-          
+
           <Link
             href="/productsPage"
             className="w-full bg-gray-100 text-gray-800 px-4 py-3 rounded-lg hover:bg-gray-200 transition duration-300 text-center flex items-center justify-center group"
