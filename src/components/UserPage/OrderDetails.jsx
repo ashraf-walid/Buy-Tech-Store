@@ -34,7 +34,7 @@ export default function OrderDetails({ order, onClose }) {
                     <p className="font-bold text-gray-900">{formatDate(order.createdAt)}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
                     <Package className="w-6 h-6 text-purple-600" />
@@ -44,7 +44,7 @@ export default function OrderDetails({ order, onClose }) {
                     <OrderStatusBadge status={order.status} />
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                     <CreditCard className="w-6 h-6 text-green-600" />
@@ -67,11 +67,11 @@ export default function OrderDetails({ order, onClose }) {
                     <Package className="w-6 h-6 text-blue-600" />
                   </h3>
                 </div>
-                
+
                 <div className="space-y-4">
                   {order.items.map((item, index) => (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className="flex justify-between items-start gap-4 p-4 rounded-xl hover:bg-gray-50 transition-colors border border-gray-100"
                     >
                       <div className="flex items-center gap-3">
@@ -104,7 +104,7 @@ export default function OrderDetails({ order, onClose }) {
                     <span>تفاصيل الشحن</span>
                     <Truck className="w-6 h-6 text-blue-600" />
                   </h3>
-                  
+
                   <div className="space-y-4">
                     <div className="flex items-start justify-end gap-3">
                       <div className="text-right">
@@ -114,7 +114,7 @@ export default function OrderDetails({ order, onClose }) {
                         <User className="w-5 h-5 text-blue-600" />
                       </div>
                     </div>
-                    
+
                     <div className="flex items-start justify-end gap-3">
                       <div className="text-right">
                         <p className="text-sm text-gray-600">{order.UserEmail}</p>
@@ -123,7 +123,7 @@ export default function OrderDetails({ order, onClose }) {
                         <Mail className="w-5 h-5 text-purple-600" />
                       </div>
                     </div>
-                    
+
                     <div className="flex items-start justify-end gap-3">
                       <div className="text-right">
                         <p className="text-sm text-gray-600">{order.phone}</p>
@@ -132,7 +132,7 @@ export default function OrderDetails({ order, onClose }) {
                         <Phone className="w-5 h-5 text-green-600" />
                       </div>
                     </div>
-                    
+
                     <div className="flex items-start justify-end gap-3 pt-3 border-t border-gray-200">
                       <div className="text-right">
                         <p className="text-sm text-gray-600 leading-relaxed">
@@ -153,27 +153,27 @@ export default function OrderDetails({ order, onClose }) {
                     <span>ملخص الدفع</span>
                     <CreditCard className="w-6 h-6 text-blue-600" />
                   </h3>
-                  
+
                   <div className="space-y-4">
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="font-semibold text-gray-900">{order.subtotal} EGP</span>
                       <span className="text-gray-600">المجموع الفرعي</span>
                     </div>
-                    
+
                     {order.discount > 0 && (
                       <div className="flex justify-between items-center p-3 bg-green-50 rounded-lg border border-green-200">
                         <span className="font-semibold text-green-700">-{(order.subtotal * order.discount / 100).toFixed(2)} EGP</span>
                         <span className="text-green-700">خصم ({order.discount}%)</span>
                       </div>
                     )}
-                    
+
                     <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                       <span className="font-semibold text-gray-900">
                         {order.shipping.price === 0 ? 'مجاني' : `${order.shipping.price} EGP`}
                       </span>
                       <span className="text-gray-600">الشحن</span>
                     </div>
-                    
+
                     <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl mt-4">
                       <span className="font-bold text-2xl text-white">{order.total} EGP</span>
                       <span className="text-white font-bold text-lg">الإجمالي النهائي</span>
