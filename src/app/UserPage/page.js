@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import OrderCard from '@/components/UserPage/OrderCard';
 import OrderDetails from '@/components/UserPage/OrderDetails';
 import OrdersEmpty from '@/components/UserPage/OrdersEmpty';
-import { Package, User, Mail, Phone, MapPin, Loader } from 'lucide-react';
+import { Package, User, Mail, Phone, MapPin, Loader, ArrowLeft } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 import Image from "next/image";
+import Link from "next/link";
 
 export default function UserPage() {
     const { user, isLoaded, isSignedIn } = useUser();
@@ -79,6 +80,16 @@ export default function UserPage() {
     return (
         <div className="min-h-screen bg-gray-50 py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <Link 
+                    href="/" 
+                    className="inline-flex items-center gap-2 text-gray-600 hover:text-blue-600 mb-6 transition-colors group"
+                >
+                    <div className="p-2 bg-white rounded-full shadow-sm border border-gray-100 group-hover:border-blue-100 group-hover:bg-blue-50 transition-all">
+                        <ArrowLeft className="w-5 h-5" />
+                    </div>
+                    <span className="font-medium">Back to Home</span>
+                </Link>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
                     <div className="flex items-start gap-6">
