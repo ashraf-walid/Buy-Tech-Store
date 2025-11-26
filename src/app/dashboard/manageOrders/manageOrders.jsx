@@ -5,10 +5,10 @@ import OrdersTable from './OrdersTable';
 import OrderStats from './OrderStats';
 import OrderDetails from '@/components/UserPage/OrderDetails';
 import { Package, Search, RefreshCw, Filter, Calendar, TrendingUp } from 'lucide-react';
+import useOrderStore from '@/store/orderStore';
 
 export default function ManageOrders() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { orders, isLoading, fetchOrders, updateOrderStatus } = useOrderStore();
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
@@ -18,64 +18,19 @@ export default function ManageOrders() {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
-
-  const fetchOrders = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/orders');
-      if (response.ok) {
-        const data = await response.json();
-        const ordersData = data.data.map(order => ({
-          ...order,
-          id: order._id
-        }));
-        setOrders(ordersData);
-      } else {
-        console.error('Failed to fetch orders');
-      }
-    } catch (error) {
-      console.error('Error fetching orders:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [fetchOrders]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await fetchOrders();
+    await fetchOrders(true);
     setRefreshing(false);
-  };
-
-  const updateOrderStatus = async (orderId, status) => {
-    try {
-      const response = await fetch(`/api/orders/${orderId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status }),
-      });
-
-      if (response.ok) {
-        setOrders(prev =>
-          prev.map(order =>
-            order.id === orderId ? { ...order, status } : order
-          )
-        );
-      } else {
-        console.error('Failed to update order status');
-      }
-    } catch (error) {
-      console.error('Error updating order status:', error);
-    }
   };
 
   const getDateRange = (filter) => {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-    switch(filter) {
+
+    switch (filter) {
       case 'today':
         return { start: today, end: now };
       case 'week':
@@ -148,7 +103,7 @@ export default function ManageOrders() {
     setSortConfig({ key, direction });
   };
 
-  if (loading) {
+  if (isLoading && orders.length === 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
         <div className="text-center">
@@ -310,7 +265,7 @@ export default function ManageOrders() {
               <div className="text-6xl mb-4 opacity-20">📦</div>
               <h3 className="text-xl font-semibold text-gray-700 mb-2">لا توجد طلبات</h3>
               <p className="text-gray-500">
-                {searchTerm || statusFilter !== 'all' || dateFilter !== 'all' 
+                {searchTerm || statusFilter !== 'all' || dateFilter !== 'all'
                   ? 'لم يتم العثور على طلبات تطابق معايير البحث'
                   : 'لا توجد طلبات حالياً'}
               </p>

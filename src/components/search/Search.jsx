@@ -72,7 +72,7 @@ export default function SearchComponent() {
           <div className="relative">
             <input
               type="text"
-              placeholder="ابحث عن منتجك بسهولة..."
+              placeholder="ابحث الان عن منتجك..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}

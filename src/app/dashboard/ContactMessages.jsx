@@ -2,18 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { Mail, Phone, User, MessageSquare, Calendar, Search, Trash2, Eye, EyeOff } from "lucide-react";
+import useContactStore from "@/store/contactStore";
 
 export default function ContactMessages() {
-  const [messages, setMessages] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { messages, isLoading, fetchMessages, deleteMessage } = useContactStore();
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState([]);
-  const [selectedMessage, setSelectedMessage] = useState(null);
   const [expandedIds, setExpandedIds] = useState(new Set());
 
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [fetchMessages]);
 
   useEffect(() => {
     let result = messages;
@@ -33,36 +32,11 @@ export default function ContactMessages() {
     setFiltered(result);
   }, [search, messages]);
 
-  const fetchMessages = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/contact");
-      if (!response.ok) throw new Error("Failed to fetch messages");
-      const data = await response.json();
-      setMessages(data);
-      setFiltered(data);
-    } catch (error) {
-      console.error("Error fetching messages:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleDelete = async (id) => {
     if (!confirm("هل أنت متأكد من حذف هذه الرسالة؟")) return;
 
-    try {
-      const response = await fetch(`/api/contact/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) throw new Error("Failed to delete message");
-
-      // Remove from local state
-      setMessages(messages.filter((msg) => msg._id !== id));
-      setFiltered(filtered.filter((msg) => msg._id !== id));
-    } catch (error) {
-      console.error("Error deleting message:", error);
+    const result = await deleteMessage(id);
+    if (!result.success) {
       alert("حدث خطأ أثناء حذف الرسالة");
     }
   };
@@ -89,7 +63,7 @@ export default function ContactMessages() {
     }).format(date);
   };
 
-  if (loading) {
+  if (isLoading && messages.length === 0) {
     return (
       <div className="p-6 flex items-center justify-center min-h-[400px]">
         <div className="text-center">
@@ -143,8 +117,8 @@ export default function ContactMessages() {
         {filtered.length > 0 ? (
           filtered.map((msg) => {
             const isExpanded = expandedIds.has(msg._id);
-            const messagePreview = msg.message?.length > 150 
-              ? msg.message.substring(0, 150) + "..." 
+            const messagePreview = msg.message?.length > 150
+              ? msg.message.substring(0, 150) + "..."
               : msg.message;
 
             return (

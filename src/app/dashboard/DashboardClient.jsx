@@ -23,11 +23,13 @@ import {
   Image as ImageIcon,
   ChevronLeft,
 } from 'lucide-react';
+import { useUser } from '@clerk/nextjs';
 
 export default function DashboardClient() {
   const [activeTab, setActiveTab] = useState('ManageOrders');
   const [isListOpen, setIsListOpen] = useState(false);
   const router = useRouter();
+  const { user } = useUser();
 
   const tabTitles = {
     ManageOrders: 'إدارة الطلبات',
@@ -301,8 +303,9 @@ export default function DashboardClient() {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <p className="font-medium text-gray-900 truncate">{user?.fullName || 'User'}</p>
               <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
-                <User className="w-5 h-5 text-gray-600" />
+                <User className="w-5 h-5 text-gray-600" /> 
               </div>
             </div>
           </div>

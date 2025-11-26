@@ -5,7 +5,7 @@ import useProductsStore from "@/store/productsStore";
 import EditProductModal from "./EditProductModal";
 
 export default function EditProductList() {
-  const { products, deleteProduct } = useProductsStore();
+  const { products, deleteProduct, ensureProductsLoaded } = useProductsStore();
   const [search, setSearch] = useState("");
   const [filtered, setFiltered] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -13,6 +13,10 @@ export default function EditProductList() {
   const [deletingId, setDeletingId] = useState(null);
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
+
+  useEffect(() => {
+    ensureProductsLoaded();
+  }, [ensureProductsLoaded]);
 
   useEffect(() => {
     let result = products;
@@ -175,7 +179,8 @@ export default function EditProductList() {
                 filtered.map((p, i) => (
                   <tr
                     key={p._id || i}
-                    className="hover:bg-blue-50/50 transition-colors group"
+                    className="hover:bg-blue-50/50 transition-colors group cursor-pointer"
+                    onClick={() => handleEdit(p)}
                   >
                     <td className="px-6 py-4 text-gray-600 font-medium">
                       {i + 1}
@@ -189,7 +194,7 @@ export default function EditProductList() {
                             className="w-full h-full object-cover"
                           />
                         </div>
-                      ) : ( <span>🖼️ Add New Image</span>
+                      ) : (<span>🖼️ Add New Image</span>
                       )}
                     </td>
                     <td className="px-6 py-4">
@@ -210,13 +215,12 @@ export default function EditProductList() {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          p.stock > 50
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${p.stock > 50
                             ? "bg-green-100 text-green-700"
                             : p.stock > 20
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-red-100 text-red-700"
+                          }`}
                       >
                         {p.stock ?? "—"}
                       </span>
