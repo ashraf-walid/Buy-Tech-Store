@@ -1,27 +1,30 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Header from '@/components/Header';
 
 const AboutUs = () => {
-    const teamMembers = [
-      {
-        name: "عضو الفريق 1",
-        role: "المؤسس ومدير المبيعات",
-        image: "/images/member1.png"
-      },
-      {
-        name: "عضو الفريق 2",
-        role: "أخصائي الدعم الفني",
-        image: "/images/member2.png"
-      }
-    ];
-  
-    return (
+  const teamMembers = [
+    {
+      name: "عضو الفريق 1",
+      role: "المؤسس ومدير المبيعات",
+      image: "/aboutUs/profile.webp"
+    },
+    {
+      name: "عضو الفريق 2",
+      role: "أخصائي الدعم الفني",
+      image: "/aboutUs/profile-2.webp"
+    }
+  ];
+
+  return (
+    <>
+      <Header />
       <div className="container mx-auto px-4 py-8 bg-gray-50" dir="rtl">
         {/* Hero Section */}
         <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
           <div className="relative w-full h-80">
             <Image
-              src="/images/AboutUs.avif"
+              src="/aboutUs/AboutUs.avif"
               alt="متجرنا"
               fill
               className="object-cover"
@@ -33,7 +36,7 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-  
+
         {/* Mission Statement */}
         <div className="max-w-4xl mx-auto mt-12 text-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">رسالتنا</h2>
@@ -41,7 +44,7 @@ const AboutUs = () => {
             نسعى لتقديم أفضل أجهزة اللابتوب المستوردة بأفضل الأسعار التنافسية في السوق، لنضمن لكل عميل الحصول على الجهاز المثالي دون التضحية بالجودة أو الميزانية.
           </p>
         </div>
-  
+
         {/* Story Section */}
         <div className="max-w-4xl mx-auto mt-16">
           <div className="bg-white rounded-xl shadow-lg p-8">
@@ -56,7 +59,7 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-  
+
         {/* Values Section */}
         <div className="max-w-6xl mx-auto mt-16 grid md:grid-cols-3 gap-8">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
@@ -70,7 +73,7 @@ const AboutUs = () => {
               نؤمن بالوضوح التام في المنتجات والأسعار، لتتخذ قرارك بثقة واطمئنان.
             </p>
           </div>
-  
+
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -82,7 +85,7 @@ const AboutUs = () => {
               نستورد الأجهزة مباشرة من الأسواق العالمية لنقدم لك أفضل الأسعار التنافسية.
             </p>
           </div>
-  
+
           <div className="bg-white rounded-xl shadow-lg p-6 text-center">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -95,7 +98,7 @@ const AboutUs = () => {
             </p>
           </div>
         </div>
-  
+
         {/* Team Section */}
         <div className="max-w-4xl mx-auto mt-16 bg-white rounded-xl shadow-lg p-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center">فريقنا</h2>
@@ -116,7 +119,7 @@ const AboutUs = () => {
             ))}
           </div>
         </div>
-  
+
         {/* Wide Selection Section */}
         <div className="max-w-4xl mx-auto mt-16 bg-white rounded-xl shadow-lg p-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">تشكيلة واسعة</h2>
@@ -124,7 +127,7 @@ const AboutUs = () => {
             نقدم مجموعة شاملة من أجهزة اللابتوب من مختلف العلامات التجارية والمصنعين. مرونتنا في التوريد تتيح لنا تلبية أي متطلبات خاصة، لنضمن لك الحصول على ما تحتاجه بأفضل سعر ممكن.
           </p>
         </div>
-  
+
         {/* Contact Section */}
         <div className="max-w-4xl mx-auto mt-16 bg-blue-50 rounded-xl p-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">زر متجرنا</h2>
@@ -139,7 +142,8 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
-    );
-  };
-  
-  export default AboutUs;
+    </>
+  );
+};
+
+export default AboutUs;

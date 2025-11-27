@@ -59,7 +59,7 @@ export default function Footer() {
               >
                 <TikTokIcon className="w-5 h-5" />
               </Link>
-              {/* <Link
+              <Link
                 href="mailto:2m.technology.eg@gmail.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -67,7 +67,7 @@ export default function Footer() {
                 aria-label="بريد إلكتروني"
               >
                 <EmailIcon className="w-5 h-5" />
-              </Link> */}
+              </Link>
             </div>
           </div>
 
@@ -87,7 +87,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#"
+                  href="/productsPage"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   المنتجات
@@ -95,7 +95,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#"
+                  href="/AboutUs"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   من نحن
@@ -103,10 +103,18 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#"
+                  href="/contact"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   اتصل بنا
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/BlogPage"
+                  className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
+                >
+                  المدونة
                 </Link>
               </li>
             </ul>
@@ -120,7 +128,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="#"
+                  href="/help"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   المساعدة
@@ -128,7 +136,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/ShippingInfo"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   الشحن والتوصيل
@@ -136,7 +144,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/ReturnsPolicy"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   الإرجاع والاستبدال
@@ -144,10 +152,26 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/PrivacyPolicy"
                   className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
                 >
                   سياسة الخصوصية
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/FAQPage"
+                  className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
+                >
+                  الأسئلة الشائعة
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/TermsAndConditions"
+                  className="block px-2 py-1 rounded hover:bg-gray-800 hover:text-[var(--color-light-blue)] focus:bg-gray-800 focus:text-[var(--color-light-blue)] transition-colors"
+                >
+                  الشروط والأحكام
                 </Link>
               </li>
             </ul>
@@ -178,12 +202,12 @@ export default function Footer() {
                   className="text-blue-400"
                   aria-label="البريد الإلكتروني"
                 />
-                {/* <a
+                <a
                   href="mailto:2m.technology.eg@gmail.com"
                   className="text-gray-300 hover:text-[var(--color-light-blue)] transition-colors focus:outline-none focus:underline"
                 >
                   2m.technology.eg@gmail.com
-                </a> */}
+                </a>
               </div>
               <div className="flex items-center gap-2 rtl:gap-2">
                 <MapPin

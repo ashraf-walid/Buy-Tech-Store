@@ -2,10 +2,6 @@
 
 import { useState } from "react";
 import { Mail } from "lucide-react";
-// import { collection, addDoc, getFirestore, serverTimestamp } from "firebase/firestore";
-// import { app } from "@/lib/firebase";
-
-// const db = getFirestore(app);
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
@@ -25,18 +21,32 @@ export default function NewsletterSection() {
     try {
       setLoading(true);
       setError("");
+      setSuccess(false);
 
-      // Save to Firestore collection
-      // await addDoc(collection(db, "newsletterSubscribers"), {
-      //   email,
-      //   createdAt: serverTimestamp(),
-      // });
+      const response = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 409) {
+          setSuccess(true); // Treat duplicate as success from user perspective or show specific message
+          setError("هذا البريد الإلكتروني مشترك بالفعل");
+          return;
+        }
+        throw new Error(data.error || "Something went wrong");
+      }
 
       setSuccess(true);
       setEmail("");
     } catch (err) {
       console.error("Error saving email:", err);
-      setError("حدث خطأ أثناء الاشتراك، حاول مرة أخرى.");
+      setError(err.message || "حدث خطأ أثناء الاشتراك، حاول مرة أخرى.");
     } finally {
       setLoading(false);
     }

@@ -7,6 +7,7 @@ import EditProductList from '@/app/dashboard/EditProductList';
 import ContactMessages from '@/app/dashboard/ContactMessages';
 import CouponManagement from '@/app/dashboard/CouponManagement';
 import ManageOrders from '@/app/dashboard/manageOrders/manageOrders';
+import NewsletterManagement from '@/app/dashboard/NewsletterManagement';
 import {
   PackageSearch,
   PackagePlus,
@@ -41,6 +42,7 @@ export default function DashboardClient() {
     CouponManagement: 'إدارة الكوبونات',
     AddUserAdmin: 'إدارة المستخدمين',
     BannerManagement: 'إدارة صور البانر',
+    NewsletterManagement: 'إدارة النشرة البريدية',
   };
 
   const navItems = [
@@ -116,6 +118,14 @@ export default function DashboardClient() {
       color: 'text-red-600',
       bg: 'bg-red-100',
     },
+    {
+      id: 'NewsletterManagement',
+      label: 'النشرة البريدية',
+      icon: Mail,
+      gradient: 'from-cyan-500 to-cyan-600',
+      color: 'text-cyan-600',
+      bg: 'bg-cyan-100',
+    },
   ];
 
   const renderContent = () => {
@@ -128,6 +138,8 @@ export default function DashboardClient() {
         return <ContactMessages />;
       case 'CouponManagement':
         return <CouponManagement />;
+      case 'NewsletterManagement':
+        return <NewsletterManagement />;
       case 'ManageOrders':
         return <ManageOrders />;
       default:
@@ -163,20 +175,18 @@ export default function DashboardClient() {
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
-            
+
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`w-full group relative flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
-                  isActive
+                className={`w-full group relative flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
                     ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg transform scale-105`
                     : 'text-gray-600 hover:bg-gray-100'
-                }`}
+                  }`}
               >
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                  isActive ? 'bg-white/20' : item.bg
-                }`}>
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20' : item.bg
+                  }`}>
                   <Icon className={`w-5 h-5 ${isActive ? 'text-white' : item.color}`} />
                 </div>
                 <span className="flex-1 text-right">{item.label}</span>
@@ -219,7 +229,7 @@ export default function DashboardClient() {
       {/* Mobile Sidebar Overlay */}
       {isListOpen && (
         <>
-          <div 
+          <div
             className="lg:hidden fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
             onClick={() => setIsListOpen(false)}
           />
@@ -238,12 +248,12 @@ export default function DashboardClient() {
                 </div>
               </div>
             </div>
-            
+
             <nav className="p-4 space-y-2 overflow-y-auto max-h-[calc(100vh-180px)]">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
-                
+
                 return (
                   <button
                     key={item.id}
@@ -251,15 +261,13 @@ export default function DashboardClient() {
                       setActiveTab(item.id);
                       setIsListOpen(false);
                     }}
-                    className={`w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${
-                      isActive
+                    className={`w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
                         ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
                         : 'text-gray-600 hover:bg-gray-100'
-                    }`}
+                      }`}
                   >
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                      isActive ? 'bg-white/20' : item.bg
-                    }`}>
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20' : item.bg
+                      }`}>
                       <Icon className={`w-5 h-5 ${isActive ? 'text-white' : item.color}`} />
                     </div>
                     <span className="flex-1 text-right">{item.label}</span>
@@ -287,9 +295,8 @@ export default function DashboardClient() {
         <div className="hidden lg:block bg-white rounded-2xl shadow-lg border-2 border-gray-200 p-6 mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className={`w-14 h-14 rounded-xl flex items-center justify-center shadow-md bg-gradient-to-br ${
-                navItems.find(item => item.id === activeTab)?.gradient || 'from-blue-500 to-blue-600'
-              }`}>
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center shadow-md bg-gradient-to-br ${navItems.find(item => item.id === activeTab)?.gradient || 'from-blue-500 to-blue-600'
+                }`}>
                 {(() => {
                   const Icon = navItems.find(item => item.id === activeTab)?.icon || Home;
                   return <Icon className="w-7 h-7 text-white" />;
@@ -305,7 +312,7 @@ export default function DashboardClient() {
             <div className="flex items-center gap-3">
               <p className="font-medium text-gray-900 truncate">{user?.fullName || 'User'}</p>
               <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
-                <User className="w-5 h-5 text-gray-600" /> 
+                <User className="w-5 h-5 text-gray-600" />
               </div>
             </div>
           </div>
