@@ -1,8 +1,11 @@
 import { connectDB } from "@/lib/mongoose";
 import Contact from "@/models/Contact";
+import { requireAdmin } from "@/lib/auth";
 
 export async function DELETE(request, { params }) {
   try {
+    requireAdmin(request);
+    
     await connectDB();
     const { _id } = params;
 

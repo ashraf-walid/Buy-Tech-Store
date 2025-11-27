@@ -57,9 +57,11 @@ export const config = {
     "/dashboard/:path*",
     "/editor-panel/:path*",
     "/reports/:path*",
+    "/cloudinary/delete/:path*",
+    "/coupons/:path*",
     "/_next/data/:path*/dashboard/:path*",
     "/_next/data/:path*/editor-panel/:path*",
     "/_next/data/:path*/reports/:path*",
-    // Removed the catch-all pattern to avoid intercepting public routes
+
   ],
 };

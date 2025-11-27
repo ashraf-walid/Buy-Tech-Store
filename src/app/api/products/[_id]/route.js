@@ -3,9 +3,11 @@ import { connectDB } from "@/lib/mongoose";
 import Product from "@/models/Product";
 import cloudinary from "@/lib/cloudinary";
 import { getCache, setCache, deleteCache } from "@/lib/cache";
+import { requireAdmin } from "@/lib/auth";
 
 export async function DELETE(request, { params }) {
   try {
+    await requireAdmin(request);
     await connectDB();
     const { _id } = params;
 
@@ -58,6 +60,7 @@ export async function DELETE(request, { params }) {
 
 export async function PUT(req, { params }) {
   try {
+    await requireAdmin(req);
     await connectDB();
     const { _id } = params;
     

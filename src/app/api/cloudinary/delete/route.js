@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import cloudinary from "@/lib/cloudinary";
+import { requireAdmin } from "@/lib/auth";
 
 export async function POST(req) {
   try {
+    requireAdmin(req);
+    
     const { publicIds } = await req.json();
 
     if (!Array.isArray(publicIds) || publicIds.length === 0) {

@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongoose';
 import Coupon from '@/models/Coupon';
+import { requireAdmin } from '@/lib/auth';
 
-export async function GET() {
+export async function GET(req) {
   try {
+    requireAdmin(req);
     await connectDB();
     const coupons = await Coupon.find().sort({ createdAt: -1 });
     return NextResponse.json(coupons);
@@ -18,6 +20,8 @@ export async function GET() {
 
 export async function POST(request) {
   try {
+    requireAdmin(request);
+    
     await connectDB();
     const data = await request.json();
 

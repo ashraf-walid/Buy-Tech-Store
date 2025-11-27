@@ -9,7 +9,10 @@ const ToggleSwitch = ({ checked, onChange }) => {
     return (
         <label className="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" checked={checked} onChange={onChange} className="sr-only peer" />
-            <div className="w-14 h-7 bg-gray-300 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-200 peer-checked:after:translate-x-7 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-green-500 peer-checked:to-green-600 shadow-inner"></div>
+            <div className="w-14 h-7 bg-gray-300 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-200 
+            peer-checked:after:translate-x-7 peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 
+            after:right-[30px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all 
+            peer-checked:bg-gradient-to-r peer-checked:from-green-500 peer-checked:to-green-600 shadow-inner"></div>
         </label>
     );
 };
@@ -32,6 +35,7 @@ const CouponManagement = () => {
         discount: '',
         description: '',
         expiresAt: '',
+        usageLimit: '',
         isActive: true,
     });
 
@@ -45,6 +49,7 @@ const CouponManagement = () => {
             setCurrentCoupon({
                 ...coupon,
                 expiresAt: coupon.expiryDate ? new Date(coupon.expiryDate).toISOString().split('T')[0] : '',
+                usageLimit: coupon.usageLimit || '',
             });
         } else {
             setIsEditing(false);
@@ -53,6 +58,7 @@ const CouponManagement = () => {
                 discount: '',
                 description: '',
                 expiresAt: '',
+                usageLimit: '',
                 isActive: true,
             });
         }
@@ -80,6 +86,7 @@ const CouponManagement = () => {
             discount: parseFloat(currentCoupon.discount),
             description: currentCoupon.description.trim(),
             expiryDate: currentCoupon.expiresAt ? new Date(currentCoupon.expiresAt).toISOString() : null,
+            usageLimit: currentCoupon.usageLimit ? parseInt(currentCoupon.usageLimit) : null,
             isActive: currentCoupon.isActive,
         };
 
@@ -160,7 +167,7 @@ const CouponManagement = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="bg-white rounded-xl p-5 shadow-lg border-2 border-gray-200">
                         <div className="flex items-center justify-between">
                             <div>
@@ -172,14 +179,16 @@ const CouponManagement = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     <div className="bg-white rounded-xl p-5 shadow-lg border-2 border-gray-200">
-                        <div>
-                            <p className="text-sm text-gray-500 font-medium mb-1">الكوبونات المعطلة</p>
-                            <p className="text-3xl font-bold text-red-600">{coupons.filter(c => !c.isActive).length}</p>
-                        </div>
-                        <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                            <X className="w-6 h-6 text-red-600" />
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-sm text-gray-500 font-medium mb-1">الكوبونات المعطلة</p>
+                                <p className="text-3xl font-bold text-red-600">{coupons.filter(c => !c.isActive).length}</p>
+                            </div>
+                            <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
+                                <X className="w-6 h-6 text-red-600" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -194,6 +203,7 @@ const CouponManagement = () => {
                                 <th className="p-4 text-sm font-bold text-gray-700">رمز الكوبون</th>
                                 <th className="p-4 text-sm font-bold text-gray-700">نسبة الخصم</th>
                                 <th className="p-4 text-sm font-bold text-gray-700">الوصف</th>
+                                <th className="p-4 text-sm font-bold text-gray-700">الاستخدام</th>
                                 <th className="p-4 text-sm font-bold text-gray-700">تاريخ الانتهاء</th>
                                 <th className="p-4 text-sm font-bold text-gray-700 text-center">الحالة</th>
                                 <th className="p-4 text-sm font-bold text-gray-700 text-center">إجراءات</th>
@@ -222,6 +232,14 @@ const CouponManagement = () => {
                                         <span className="text-sm text-gray-600">
                                             {coupon.description || 'لا يوجد وصف'}
                                         </span>
+                                    </td>
+                                    <td className="p-4">
+                                        <div className="flex flex-col text-sm">
+                                            <span className="font-medium text-gray-900">
+                                                {coupon.usedCount || 0} / {coupon.usageLimit || '∞'}
+                                            </span>
+                                            <span className="text-xs text-gray-500">مرة</span>
+                                        </div>
                                     </td>
                                     <td className="p-4">
                                         <div className="flex items-center gap-2">
@@ -353,6 +371,22 @@ const CouponManagement = () => {
                                         value={currentCoupon.expiresAt}
                                         onChange={handleInputChange}
                                         className="w-full p-3 border-2 border-gray-200 rounded-xl text-right focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label className="block mb-2 font-semibold text-gray-700 flex items-center gap-2">
+                                        <Tag className="w-4 h-4" />
+                                        حد الاستخدام (اختياري)
+                                    </label>
+                                    <input
+                                        type="number"
+                                        name="usageLimit"
+                                        value={currentCoupon.usageLimit}
+                                        onChange={handleInputChange}
+                                        className="w-full p-3 border-2 border-gray-200 rounded-xl text-right focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all outline-none"
+                                        placeholder="عدد مرات الاستخدام المسموحة"
+                                        min="1"
                                     />
                                 </div>
                             </div>

@@ -1,8 +1,10 @@
 import { connectDB } from "@/lib/mongoose";
 import Contact from "@/models/Contact";
+import { requireAdmin } from "@/lib/auth";
 
 export async function POST(req) {
   try {
+    
     await connectDB();
     const data = await req.json();
 
@@ -43,8 +45,9 @@ export async function POST(req) {
   }
 }
 
-export async function GET() {
+export async function GET(req) {
   try {
+    requireAdmin(req);
     await connectDB();
     
     // Get all contact messages, sorted by newest first

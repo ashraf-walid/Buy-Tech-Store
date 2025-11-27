@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongoose';
 import Order from '@/models/Order';
+import { requireAdmin } from '@/lib/auth';
 
 export async function GET(request, { params }) {
     try {
+        await requireAdmin(request);
         await connectDB();
         const { id } = params;
 
@@ -28,6 +30,7 @@ export async function GET(request, { params }) {
 
 export async function PUT(request, { params }) {
     try {
+        await requireAdmin(request);
         await connectDB();
         const { id } = params;
         const data = await request.json();

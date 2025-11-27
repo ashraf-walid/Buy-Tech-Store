@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongoose';
 import Coupon from '@/models/Coupon';
+import { requireAdmin } from '@/lib/auth';
 
 export async function PUT(request, { params }) {
     try {
+        await requireAdmin(request);
         await connectDB();
         const { id } = params;
         const data = await request.json();
@@ -33,6 +35,7 @@ export async function PUT(request, { params }) {
 
 export async function DELETE(request, { params }) {
     try {
+        await requireAdmin(request);
         await connectDB();
         const { id } = params;
 

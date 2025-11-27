@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongoose';
 import Order from '@/models/Order';
+import Coupon from '@/models/Coupon';
+import { requireAdmin } from '@/lib/auth';
 
 export async function POST(request) {
   try {
@@ -29,6 +31,14 @@ export async function POST(request) {
     // Create and save the order
     const order = new Order(orderData);
     await order.save();
+    
+    // Increment coupon usage if applicable
+    if (orderData.coupon) {
+      await Coupon.findOneAndUpdate(
+        { code: orderData.coupon },
+        { $inc: { usedCount: 1 } }
+      );
+    }
     
     // Return the created order
     return NextResponse.json({ 
@@ -81,7 +91,9 @@ export async function POST(request) {
 
 // Add GET endpoint to fetch orders (for admin panel)
 export async function GET(request) {
+  
   try {
+    await requireAdmin(request);
     await connectDB();
     
     const { searchParams } = new URL(request.url);
