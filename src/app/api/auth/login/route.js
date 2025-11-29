@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { requireAuth } from "@/lib/auth";
 
 export async function POST(req) {
   try {
@@ -41,6 +42,25 @@ export async function POST(req) {
     return res;
   } catch (error) {
     console.error("Login error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET(req) {
+  const token = req.cookies.get("auth")?.value;
+  if (!token) {
+    return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+  }
+
+  try {
+    requireAuth(req);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return NextResponse.json({ message: "Authenticated", role: decoded.role });
+  } catch (error) {
+    console.error("Token verification error:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

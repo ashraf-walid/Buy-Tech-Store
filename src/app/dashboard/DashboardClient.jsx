@@ -8,6 +8,7 @@ import ContactMessages from '@/app/dashboard/ContactMessages';
 import CouponManagement from '@/app/dashboard/CouponManagement';
 import ManageOrders from '@/app/dashboard/manageOrders/manageOrders';
 import NewsletterManagement from '@/app/dashboard/NewsletterManagement';
+import UserManagement from '@/app/dashboard/UserManagement';
 import {
   PackageSearch,
   PackagePlus,
@@ -26,7 +27,7 @@ import {
 } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 
-export default function DashboardClient() {
+export default function DashboardClient({ initialUser }) {
   const [activeTab, setActiveTab] = useState('ManageOrders');
   const [isListOpen, setIsListOpen] = useState(false);
   const router = useRouter();
@@ -37,12 +38,12 @@ export default function DashboardClient() {
     addProduct: 'إضافة منتج جديد',
     productManagement: 'إدارة المنتجات',
     contactMessages: 'إدارة الرسائل',
-    addaccessory: 'إضافة ملحق جديد',
-    MangeAccessories: 'إدارة الملحقات',
     CouponManagement: 'إدارة الكوبونات',
     AddUserAdmin: 'إدارة المستخدمين',
-    BannerManagement: 'إدارة صور البانر',
     NewsletterManagement: 'إدارة النشرة البريدية',
+    // BannerManagement: 'إدارة صور البانر',
+    // addaccessory: 'إضافة ملحق جديد',
+    // MangeAccessories: 'إدارة الملحقات',
   };
 
   const navItems = [
@@ -78,22 +79,22 @@ export default function DashboardClient() {
       color: 'text-indigo-600',
       bg: 'bg-indigo-100',
     },
-    {
-      id: 'addaccessory',
-      label: 'إضافة ملحق',
-      icon: SquarePlus,
-      gradient: 'from-orange-500 to-orange-600',
-      color: 'text-orange-600',
-      bg: 'bg-orange-100',
-    },
-    {
-      id: 'MangeAccessories',
-      label: 'إدارة الملحقات',
-      icon: Headphones,
-      gradient: 'from-pink-500 to-pink-600',
-      color: 'text-pink-600',
-      bg: 'bg-pink-100',
-    },
+    // {
+    //   id: 'addaccessory',
+    //   label: 'إضافة ملحق',
+    //   icon: SquarePlus,
+    //   gradient: 'from-orange-500 to-orange-600',
+    //   color: 'text-orange-600',
+    //   bg: 'bg-orange-100',
+    // },
+    // {
+    //   id: 'MangeAccessories',
+    //   label: 'إدارة الملحقات',
+    //   icon: Headphones,
+    //   gradient: 'from-pink-500 to-pink-600',
+    //   color: 'text-pink-600',
+    //   bg: 'bg-pink-100',
+    // },
     {
       id: 'CouponManagement',
       label: 'إدارة الكوبونات',
@@ -110,14 +111,14 @@ export default function DashboardClient() {
       color: 'text-teal-600',
       bg: 'bg-teal-100',
     },
-    {
-      id: 'BannerManagement',
-      label: 'إدارة صور البانر',
-      icon: ImageIcon,
-      gradient: 'from-red-500 to-red-600',
-      color: 'text-red-600',
-      bg: 'bg-red-100',
-    },
+    // {
+    //   id: 'BannerManagement',
+    //   label: 'إدارة صور البانر',
+    //   icon: ImageIcon,
+    //   gradient: 'from-red-500 to-red-600',
+    //   color: 'text-red-600',
+    //   bg: 'bg-red-100',
+    // },
     {
       id: 'NewsletterManagement',
       label: 'النشرة البريدية',
@@ -138,6 +139,8 @@ export default function DashboardClient() {
         return <ContactMessages />;
       case 'CouponManagement':
         return <CouponManagement />;
+      case 'AddUserAdmin':
+        return <UserManagement />;
       case 'NewsletterManagement':
         return <NewsletterManagement />;
       case 'ManageOrders':
@@ -181,8 +184,8 @@ export default function DashboardClient() {
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full group relative flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
-                    ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg transform scale-105`
-                    : 'text-gray-600 hover:bg-gray-100'
+                  ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg transform scale-105`
+                  : 'text-gray-600 hover:bg-gray-100'
                   }`}
               >
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20' : item.bg
@@ -262,8 +265,8 @@ export default function DashboardClient() {
                       setIsListOpen(false);
                     }}
                     className={`w-full flex items-center gap-3 px-4 py-3.5 text-sm font-semibold rounded-xl transition-all duration-200 ${isActive
-                        ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
-                        : 'text-gray-600 hover:bg-gray-100'
+                      ? `bg-gradient-to-r ${item.gradient} text-white shadow-lg`
+                      : 'text-gray-600 hover:bg-gray-100'
                       }`}
                   >
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${isActive ? 'bg-white/20' : item.bg
@@ -310,7 +313,7 @@ export default function DashboardClient() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <p className="font-medium text-gray-900 truncate">{user?.fullName || 'User'}</p>
+              <p className="font-medium text-gray-900 truncate">{user?.fullName || initialUser?.role.toUpperCase()}</p>
               <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
                 <User className="w-5 h-5 text-gray-600" />
               </div>
