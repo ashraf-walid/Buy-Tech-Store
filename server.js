@@ -18,28 +18,25 @@ if (!process.env.PORT) {
 const port = parseInt(process.env.PORT, 10);
 const dev = process.env.NODE_ENV !== 'production';
 
-// Check if standalone build exists
-const standalonePath = path.join(__dirname, '.next/standalone/server.js');
+// Check if standalone build exists - DISABLED
+// We explicitly disable the standalone server path here because running it from the project root 
+// (without copying public/static folders into .next/standalone) causes asset resolution failures 
+// (404s for images and parsing errors for CSS).
+// Since the full node_modules and project structure are available, we defaults to the custom server.
 
-if (fs.existsSync(standalonePath)) {
-  console.log(`Using standalone server on ${process.env.HOSTNAME}:${port}...`);
-  // Use dynamic import for the standalone server, converting path to URL for cross-platform compatibility
-  await import(pathToFileURL(standalonePath).href);
-} else {
-  console.log(`Using Next.js server on ${process.env.HOSTNAME}:${port}...`);
-  const app = next({ dev, hostname: process.env.HOSTNAME, port });
-  const handle = app.getRequestHandler();
+console.log(`Using Next.js server on ${process.env.HOSTNAME}:${port}...`);
+const app = next({ dev, hostname: process.env.HOSTNAME, port });
+const handle = app.getRequestHandler();
 
-  app.prepare().then(() => {
-    createServer((req, res) => {
-      const parsedUrl = parse(req.url, true);
-      handle(req, res, parsedUrl);
-    }).listen(port, getHostname(), (err) => {
-      if (err) throw err;
-      console.log(`> Ready on http://${getHostname()}:${port}`);
-    });
+app.prepare().then(() => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url, true);
+    handle(req, res, parsedUrl);
+  }).listen(port, getHostname(), (err) => {
+    if (err) throw err;
+    console.log(`> Ready on http://${getHostname()}:${port}`);
   });
-}
+});
 
 function getHostname() {
   return process.env.HOSTNAME || '0.0.0.0';
