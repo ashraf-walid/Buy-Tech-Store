@@ -52,7 +52,7 @@ const orderSchema = new mongoose.Schema(
     userEmail: { type: String, required: true },
     
     // Metadata
-    orderNumber: { type: String, required: true, unique: true },
+    orderNumber: { type: String, required: true },
     notes: { type: String, default: '' }
   },
   { 
