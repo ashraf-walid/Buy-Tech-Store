@@ -7,7 +7,7 @@ import {
   fieldsMedia,
   fieldsPricing,
   fieldsSpecs,
-} from "@/app/dashboard/FieldDefinitions";
+} from "@/lib/fieldDefinitions";
 
 export default function EditProductModal({ product, isOpen, onClose, onSave }) {
   const [productData, setProductData] = useState(product || {});
@@ -168,9 +168,9 @@ export default function EditProductModal({ product, isOpen, onClose, onSave }) {
       // Update gallery images - filter out removed ones and add new ones
       const existingGallery = Array.isArray(productData.images)
         ? productData.images.filter((img) => {
-            const imageUrl = typeof img === "string" ? img : img?.url;
-            return imageUrl && !imagesToRemove.includes(imageUrl);
-          })
+          const imageUrl = typeof img === "string" ? img : img?.url;
+          return imageUrl && !imagesToRemove.includes(imageUrl);
+        })
         : [];
 
       updatedData.images = [...existingGallery, ...galleryUrls];
@@ -309,11 +309,10 @@ export default function EditProductModal({ product, isOpen, onClose, onSave }) {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-3 font-medium transition-all relative whitespace-nowrap ${
-                  activeTab === tab.id
+                className={`px-6 py-3 font-medium transition-all relative whitespace-nowrap ${activeTab === tab.id
                     ? "text-blue-600 bg-white"
                     : "text-gray-600 hover:text-gray-800 hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 {tab.label}
                 {activeTab === tab.id && (

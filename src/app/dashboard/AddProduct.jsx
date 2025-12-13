@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import SmartSection from "@/app/dashboard/SmartFields";
-import { fieldsBasic, fieldsMedia, fieldsPricing, fieldsSpecs } from "@/app/dashboard/FieldDefinitions";
+import { fieldsBasic, fieldsMedia, fieldsPricing, fieldsSpecs } from "@/lib/fieldDefinitions";
 import Image from 'next/image';
 
 const initialState = {
@@ -222,15 +222,15 @@ export default function AddProduct() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-4 md:p-6">
             <div className="max-w-6xl mx-auto">
                 {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-800 mb-2 flex items-center gap-3">
+                <div className="mb-6 md:mb-8">
+                    <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-2 flex items-center gap-3">
                         <span className="text-blue-600">➕</span>
                         Add New Product
                     </h1>
-                    <p className="text-gray-600">Create a new product listing with all details</p>
+                    <p className="text-sm md:text-base text-gray-600">Create a new product listing with all details</p>
                 </div>
 
                 {/* Alerts */}
@@ -238,19 +238,19 @@ export default function AddProduct() {
                     <div className="mb-6">
                         {error && (
                             <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-xl flex items-center gap-3 animate-slideDown shadow-md">
-                                <span className="text-3xl">⚠️</span>
+                                <span className="text-2xl md:text-3xl">⚠️</span>
                                 <div>
                                     <p className="font-semibold text-red-800">Error</p>
-                                    <p className="text-red-700">{error}</p>
+                                    <p className="text-sm md:text-base text-red-700">{error}</p>
                                 </div>
                             </div>
                         )}
                         {message && (
                             <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-xl flex items-center gap-3 animate-slideDown shadow-md">
-                                <span className="text-3xl">✅</span>
+                                <span className="text-2xl md:text-3xl">✅</span>
                                 <div>
                                     <p className="font-semibold text-green-800">Success</p>
-                                    <p className="text-green-700">{message}</p>
+                                    <p className="text-sm md:text-base text-green-700">{message}</p>
                                 </div>
                             </div>
                         )}
@@ -260,18 +260,17 @@ export default function AddProduct() {
                 {/* Main Form Card */}
                 <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
                     {/* Tabs Navigation */}
-                    <div className="border-b border-gray-200 bg-gray-50 px-6 overflow-x-auto">
+                    <div className="border-b border-gray-200 bg-gray-50 px-4 md:px-6 overflow-x-auto scrollbar-hide">
                         <div className="flex gap-1 min-w-max">
                             {tabs.map(tab => (
                                 <button
                                     key={tab.id}
                                     type="button"
                                     onClick={() => setActiveTab(tab.id)}
-                                    className={`px-6 py-4 font-medium transition-all relative whitespace-nowrap ${
-                                        activeTab === tab.id
-                                            ? 'text-blue-600 bg-white'
-                                            : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
-                                    }`}
+                                    className={`px-4 md:px-6 py-3 md:py-4 text-sm md:text-base font-medium transition-all relative whitespace-nowrap ${activeTab === tab.id
+                                        ? 'text-blue-600 bg-white'
+                                        : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
+                                        }`}
                                 >
                                     {tab.label}
                                     {activeTab === tab.id && (
@@ -284,14 +283,14 @@ export default function AddProduct() {
 
                     {/* Progress Bar during Upload */}
                     {uploading && (
-                        <div className="px-6 pt-4">
+                        <div className="px-4 md:px-6 pt-4">
                             <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
                                 <div className="flex items-center justify-between mb-2">
                                     <span className="text-sm font-semibold text-blue-700">Uploading Images...</span>
                                     <span className="text-sm font-bold text-blue-700">{uploadProgress}%</span>
                                 </div>
                                 <div className="w-full bg-blue-200 rounded-full h-3 overflow-hidden">
-                                    <div 
+                                    <div
                                         className="bg-gradient-to-r from-blue-500 to-indigo-600 h-full transition-all duration-300 rounded-full"
                                         style={{ width: `${uploadProgress}%` }}
                                     ></div>
@@ -301,7 +300,7 @@ export default function AddProduct() {
                     )}
 
                     {/* Form Content */}
-                    <div className="p-6">
+                    <div className="p-4 md:p-6">
                         <div className="space-y-6">
                             {activeTab === 'basic' && (
                                 <div className="animate-fadeIn">
@@ -354,13 +353,13 @@ export default function AddProduct() {
                             {activeTab === 'images' && (
                                 <div className="space-y-6 animate-fadeIn">
                                     {/* Main Image Section */}
-                                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-blue-200 shadow-sm">
+                                    <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 md:p-6 border-2 border-blue-200 shadow-sm">
                                         <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
                                             <span>🖼️</span> Main Product Image
                                         </h3>
-                                        <div className="flex flex-wrap gap-6 items-start">
+                                        <div className="flex flex-col md:flex-row gap-6 items-start">
                                             {mainImagePreview && (
-                                                <div className="relative group">
+                                                <div className="relative group w-full md:w-auto flex justify-center md:block">
                                                     <div className="w-40 h-40 rounded-xl overflow-hidden shadow-lg border-4 border-white bg-white">
                                                         <Image
                                                             src={mainImagePreview}
@@ -373,7 +372,7 @@ export default function AddProduct() {
                                                     <button
                                                         type="button"
                                                         onClick={handleRemoveMainImage}
-                                                        className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all transform hover:scale-110"
+                                                        className="absolute -top-2 -right-2 md:-right-2 w-8 h-8 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center shadow-lg opacity-100 md:opacity-0 group-hover:opacity-100 transition-all transform hover:scale-110"
                                                         disabled={isDataSending}
                                                     >
                                                         ×
@@ -383,10 +382,10 @@ export default function AddProduct() {
                                                     </span>
                                                 </div>
                                             )}
-                                            <div className="flex-1 min-w-[200px]">
-                                                <label className="block cursor-pointer">
-                                                    <div className="border-3 border-dashed border-blue-300 rounded-xl p-8 hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
-                                                        <div className="text-5xl mb-3">📤</div>
+                                            <div className="flex-1 w-full min-w-[200px]">
+                                                <label className="block cursor-pointer w-full">
+                                                    <div className="border-3 border-dashed border-blue-300 rounded-xl p-6 md:p-8 hover:border-blue-500 hover:bg-blue-50 transition-all text-center">
+                                                        <div className="text-4xl md:text-5xl mb-3">📤</div>
                                                         <p className="text-blue-600 font-semibold mb-1">
                                                             Upload Main Image
                                                         </p>
@@ -405,7 +404,7 @@ export default function AddProduct() {
                                     </div>
 
                                     {/* Gallery Images Section */}
-                                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border-2 border-green-200 shadow-sm">
+                                    <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 md:p-6 border-2 border-green-200 shadow-sm">
                                         <h3 className="font-semibold text-lg mb-4 flex items-center gap-2">
                                             <span>🎨</span> Product Gallery
                                         </h3>
@@ -414,10 +413,10 @@ export default function AddProduct() {
                                         {galleryPreviews.length > 0 && (
                                             <div className="mb-4">
                                                 <p className="text-sm text-gray-600 mb-3 font-medium">Selected Images ({galleryPreviews.length}):</p>
-                                                <div className="flex flex-wrap gap-3">
+                                                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                                                     {galleryPreviews.map((previewUrl, index) => (
                                                         <div key={index} className="relative group">
-                                                            <div className="w-28 h-28 rounded-lg overflow-hidden shadow-md border-2 border-white bg-white">
+                                                            <div className="w-24 h-24 md:w-28 md:h-28 rounded-lg overflow-hidden shadow-md border-2 border-white bg-white">
                                                                 <Image
                                                                     src={previewUrl}
                                                                     alt={`Gallery ${index + 1}`}
@@ -429,7 +428,7 @@ export default function AddProduct() {
                                                             <button
                                                                 type="button"
                                                                 onClick={() => handleRemoveGalleryFile(index)}
-                                                                className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-sm shadow-lg opacity-0 group-hover:opacity-100 transition-all"
+                                                                className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center text-sm shadow-lg opacity-100 md:opacity-0 group-hover:opacity-100 transition-all"
                                                                 disabled={isDataSending}
                                                             >
                                                                 ×
@@ -441,7 +440,7 @@ export default function AddProduct() {
                                         )}
 
                                         {/* Upload Gallery Button */}
-                                        <label className="inline-block cursor-pointer">
+                                        <label className="inline-block cursor-pointer w-full">
                                             <div className="border-2 border-dashed border-green-300 rounded-xl p-6 hover:border-green-500 hover:bg-green-50 transition-all text-center">
                                                 <div className="text-4xl mb-2">🖼️</div>
                                                 <p className="text-green-600 font-semibold mb-1">Add Gallery Images</p>
@@ -463,33 +462,33 @@ export default function AddProduct() {
                     </div>
 
                     {/* Footer Actions */}
-                    <div className="border-t border-gray-200 bg-gray-50 px-6 py-4 flex justify-between items-center">
+                    <div className="border-t border-gray-200 bg-gray-50 px-4 md:px-6 py-4 flex flex-col-reverse md:flex-row justify-between items-center gap-4 md:gap-0">
                         <button
                             type="button"
                             onClick={handleReset}
                             disabled={isDataSending}
-                            className="px-6 py-2.5 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                            className="w-full md:w-auto px-6 py-2.5 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-100 transition-all font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             <span>🔄</span> Reset Form
                         </button>
                         <button
                             onClick={sendData}
                             disabled={isDataSending || uploading}
-                            className="px-8 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                            className="w-full md:w-auto px-8 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                         >
                             {uploading ? (
                                 <>
                                     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                     </svg>
                                     Uploading...
                                 </>
                             ) : isDataSending ? (
                                 <>
                                     <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                                     </svg>
                                     Sending...
                                 </>
@@ -517,6 +516,13 @@ export default function AddProduct() {
                 }
                 .animate-slideDown {
                     animation: slideDown 0.3s ease-out;
+                }
+                .scrollbar-hide::-webkit-scrollbar {
+                    display: none;
+                }
+                .scrollbar-hide {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
                 }
             `}</style>
         </div>

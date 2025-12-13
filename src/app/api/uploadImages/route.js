@@ -18,10 +18,9 @@ export async function POST(req) {
 
     const upload = await cloudinary.uploader.upload(base64, {
       folder: "buy-tech/products",
-      transformation: [{ width: 800, height: 800, crop: "fill" }],
     });
 
-    return NextResponse.json({ url: upload.secure_url, public_id: upload.public_id,});
+    return NextResponse.json({ url: upload.secure_url, public_id: upload.public_id, });
   } catch (error) {
     console.error("Upload error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });

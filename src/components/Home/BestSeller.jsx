@@ -32,6 +32,14 @@ const BestSeller = () => {
   if (loading) return <Loading />;
   if (error) return <ErrorState message={error} />;
 
+
+  const car = {name: "Honda", price: 100000};
+
+  const local = Object.create(car);
+
+  console.log(`console.log local: ${local}`);
+  console.log(`console.log local.prototype: ${local.prototype}`);
+
   return (
     <section className="w-full py-20 bg-white">
       <div className="w-full lg:w-[82%] mx-auto px-4 py-10">

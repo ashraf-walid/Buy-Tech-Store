@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import OrdersTable from './OrdersTable';
 import OrderStats from './OrderStats';
 import OrderDetails from '@/components/UserPage/OrderDetails';
@@ -8,17 +8,42 @@ import { Package, Search, RefreshCw, Filter, Calendar, TrendingUp } from 'lucide
 import useOrderStore from '@/store/orderStore';
 
 export default function ManageOrders() {
-  const { orders, isLoading, fetchOrders, updateOrderStatus } = useOrderStore();
+  const { orders, isLoading, updateOrderStatus, fetchOrders, lastOrderTime } = useOrderStore();
   const [refreshing, setRefreshing] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'createdAt', direction: 'desc' });
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
+  const [showNewBadge, setShowNewBadge] = useState(false);
+  const prevLastOrderTime = useRef(null);
 
   useEffect(() => {
+    if (lastOrderTime && prevLastOrderTime.current) {
+      if (new Date(lastOrderTime) > new Date(prevLastOrderTime.current)) {
+        setShowNewBadge(true);
+        const audio = new Audio('/sounds/notification.mp3'); 
+        audio.play().catch(() => { });
+        setTimeout(() => setShowNewBadge(false), 10000);
+      }
+    }
+    if (lastOrderTime) {
+      prevLastOrderTime.current = lastOrderTime;
+    }
+  }, [lastOrderTime]);
+
+  useEffect(() => {
+    const { fetchOrders, checkNewOrders } = useOrderStore.getState();
+
     fetchOrders();
-  }, [fetchOrders]);
+
+    const interval = setInterval(() => {
+      checkNewOrders();
+    }, 20000);
+
+    return () => clearInterval(interval);
+  }, []);
+
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -128,7 +153,14 @@ export default function ManageOrders() {
                 <Package className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-800">إدارة الطلبات</h1>
+                <h1 className="text-3xl font-bold text-gray-800 flex items-center gap-3">
+                  إدارة الطلبات
+                  {showNewBadge && (
+                    <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full animate-bounce shadow-md">
+                      New
+                    </span>
+                  )}
+                </h1>
                 <p className="text-gray-600 text-sm">إدارة ومتابعة جميع الطلبات</p>
               </div>
             </div>

@@ -129,11 +129,11 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white p-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-blue-600 cursor-pointer hover:bg-blue-700 disabled:bg-blue-300 text-white p-2.5 rounded-lg transition-colors flex items-center justify-center gap-2"
             >
               {isSubmitting && (
                 <span
-                  className="inline-block h-4 w-4 border-2 border-white/70 border-t-transparent rounded-full animate-spin"
+                  className="inline-block h-4 w-4 border-2 border-white/70 border-t-transparent rounded-full animate-spin cursor-not-allowed"
                   aria-hidden="true"
                 />
               )}

@@ -1,11 +1,12 @@
 import Image from "next/image";
+import NewsletterForm from "@/components/NewsletterForm";
 
 const BlogPage = () => {
   const blogPosts = [
     {
       id: 1,
       title: "كيف تختار لابتوب الألعاب المثالي في 2025",
-      image: "/images/Games.webp",
+      image: "/blog/Games.webp",
       category: "دليل الشراء",
       date: "2 يناير 2025",
       excerpt:
@@ -15,7 +16,7 @@ const BlogPage = () => {
     {
       id: 2,
       title: "أفضل 5 لوحات مفاتيح ميكانيكية للمبرمجين",
-      image: "/images/keyboards.webp",
+      image: "/blog/keyboards.webp",
       category: "إكسسوارات",
       date: "4 يناير 2025",
       excerpt:
@@ -25,7 +26,7 @@ const BlogPage = () => {
     {
       id: 3,
       title: "نصائح لصيانة اللابتوب وإطالة عمره",
-      image: "/images/maintenance.webp",
+      image: "/blog/maintenance.webp",
       category: "صيانة",
       date: "5 يناير 2025",
       excerpt:
@@ -50,11 +51,10 @@ const BlogPage = () => {
           {["كل المقالات", "أدلة الشراء", "مراجعات", "إكسسوارات", "صيانة"].map((cat) => (
             <button
               key={cat}
-              className={`px-6 py-2 rounded-full ${
-                cat === "كل المقالات"
-                  ? "bg-blue-500 text-white hover:bg-blue-600"
-                  : "bg-white text-gray-700 hover:bg-gray-100"
-              }`}
+              className={`px-6 py-2 rounded-full ${cat === "كل المقالات"
+                ? "bg-blue-500 text-white hover:bg-blue-600"
+                : "bg-white text-gray-700 hover:bg-gray-100"
+                }`}
             >
               {cat}
             </button>
@@ -68,7 +68,7 @@ const BlogPage = () => {
           <div className="md:flex">
             <div className="md:flex-shrink-0 relative w-full h-64 md:w-[384px]">
               <Image
-                src="/images/distinct.webp"
+                src="/blog/distinct.webp"
                 alt="مقال مميز"
                 fill
                 className="object-cover"
@@ -135,16 +135,7 @@ const BlogPage = () => {
         <p className="text-gray-600 mb-6">
           اشترك في النشرة البريدية ليصلك أحدث أخبار التقنية والعروض الحصرية
         </p>
-        <div className="flex max-w-md mx-auto">
-          <button className="px-4 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 w-24">
-            اشترك
-          </button>
-          <input
-            type="email"
-            placeholder="أدخل بريدك الإلكتروني"
-            className="flex-1 px-4 py-2 rounded-l-lg border-2 border-r-0 border-gray-200 focus:outline-none focus:border-blue-500"
-          />
-        </div>
+        <NewsletterForm variant="default" />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { PlusCircle, Edit, Trash2, X, Loader2, Ticket, Calendar, Percent, Tag } from 'lucide-react';
+import { PlusCircle, Edit, Trash2, X, Ticket, Calendar, Percent, Tag } from 'lucide-react';
 import useCouponStore from '@/store/couponStore';
 
 // Enhanced toggle switch component

@@ -1,3 +1,4 @@
+    // Static JavaScript Module
     
     // Field definitions
     export const fieldsBasic = [

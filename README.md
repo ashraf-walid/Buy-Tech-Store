@@ -67,6 +67,19 @@ and deployed on **Railway**.
 
     Environment variables managed via Railway dashboard
 
+    ## Load Test Results (Dec 2, 2025)
+
+    - **Concurrent Users**: 50
+    - **Test Duration**: 5+ minutes
+    - **Total Requests**: 2,691
+    - **Failure Rate**: 0.15%
+    - **Order Success Rate**: 100% (77/77)
+    - **Median Response**: 110ms
+    - **95th Percentile**: 350ms
+
+    ✅ Production Ready
+
+
 
   👨‍💻 Developer
 

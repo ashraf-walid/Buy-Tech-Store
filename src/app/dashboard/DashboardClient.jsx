@@ -8,12 +8,11 @@ import ContactMessages from '@/app/dashboard/ContactMessages';
 import CouponManagement from '@/app/dashboard/CouponManagement';
 import ManageOrders from '@/app/dashboard/manageOrders/manageOrders';
 import NewsletterManagement from '@/app/dashboard/NewsletterManagement';
+import SaleManagement from '@/app/dashboard/SaleManagement';
 import UserManagement from '@/app/dashboard/UserManagement';
 import {
   PackageSearch,
   PackagePlus,
-  SquarePlus,
-  Headphones,
   ShoppingCart,
   Users,
   Ticket,
@@ -24,6 +23,7 @@ import {
   Home,
   Image as ImageIcon,
   ChevronLeft,
+  Percent,
 } from 'lucide-react';
 import { useUser } from '@clerk/nextjs';
 
@@ -41,9 +41,7 @@ export default function DashboardClient({ initialUser }) {
     CouponManagement: 'إدارة الكوبونات',
     AddUserAdmin: 'إدارة المستخدمين',
     NewsletterManagement: 'إدارة النشرة البريدية',
-    // BannerManagement: 'إدارة صور البانر',
-    // addaccessory: 'إضافة ملحق جديد',
-    // MangeAccessories: 'إدارة الملحقات',
+    SaleManagement: 'إدارة قسم العروض',
   };
 
   const navItems = [
@@ -79,22 +77,6 @@ export default function DashboardClient({ initialUser }) {
       color: 'text-indigo-600',
       bg: 'bg-indigo-100',
     },
-    // {
-    //   id: 'addaccessory',
-    //   label: 'إضافة ملحق',
-    //   icon: SquarePlus,
-    //   gradient: 'from-orange-500 to-orange-600',
-    //   color: 'text-orange-600',
-    //   bg: 'bg-orange-100',
-    // },
-    // {
-    //   id: 'MangeAccessories',
-    //   label: 'إدارة الملحقات',
-    //   icon: Headphones,
-    //   gradient: 'from-pink-500 to-pink-600',
-    //   color: 'text-pink-600',
-    //   bg: 'bg-pink-100',
-    // },
     {
       id: 'CouponManagement',
       label: 'إدارة الكوبونات',
@@ -111,14 +93,6 @@ export default function DashboardClient({ initialUser }) {
       color: 'text-teal-600',
       bg: 'bg-teal-100',
     },
-    // {
-    //   id: 'BannerManagement',
-    //   label: 'إدارة صور البانر',
-    //   icon: ImageIcon,
-    //   gradient: 'from-red-500 to-red-600',
-    //   color: 'text-red-600',
-    //   bg: 'bg-red-100',
-    // },
     {
       id: 'NewsletterManagement',
       label: 'النشرة البريدية',
@@ -126,6 +100,14 @@ export default function DashboardClient({ initialUser }) {
       gradient: 'from-cyan-500 to-cyan-600',
       color: 'text-cyan-600',
       bg: 'bg-cyan-100',
+    },
+    {
+      id: 'SaleManagement',
+      label: 'إدارة العروض',
+      icon: Percent,
+      gradient: 'from-red-500 to-red-600',
+      color: 'text-red-600',
+      bg: 'bg-red-100',
     },
   ];
 
@@ -143,6 +125,8 @@ export default function DashboardClient({ initialUser }) {
         return <UserManagement />;
       case 'NewsletterManagement':
         return <NewsletterManagement />;
+      case 'SaleManagement':
+        return <SaleManagement />;
       case 'ManageOrders':
         return <ManageOrders />;
       default:
@@ -205,7 +189,7 @@ export default function DashboardClient({ initialUser }) {
         <div className="p-4 border-t border-gray-200">
           <button
             onClick={() => router.push('/')}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl font-semibold"
+            className="w-full flex items-center justify-center cursor-pointer gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg hover:shadow-xl font-semibold"
           >
             <Home className="w-5 h-5" />
             <span>العودة للرئيسية</span>
@@ -282,7 +266,7 @@ export default function DashboardClient({ initialUser }) {
             <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white">
               <button
                 onClick={() => router.push('/')}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg font-semibold"
+                className="w-full flex items-center justify-center cursor-pointer gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all shadow-lg font-semibold"
               >
                 <Home className="w-5 h-5" />
                 <span>العودة للرئيسية</span>

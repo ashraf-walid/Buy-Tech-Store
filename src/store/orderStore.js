@@ -5,26 +5,49 @@ const useOrderStore = create((set, get) => ({
     isLoading: false,
     error: null,
     hasFetched: false,
+    lastOrderTime: null,
 
     fetchOrders: async (force = false) => {
         const { hasFetched, isLoading } = get();
         if ((hasFetched && !force) || isLoading) return;
 
         set({ isLoading: true, error: null });
+
         try {
             const response = await fetch('/api/orders');
-            if (response.ok) {
-                const data = await response.json();
-                const ordersData = data.data.map(order => ({
-                    ...order,
-                    id: order._id
-                }));
-                set({ orders: ordersData, hasFetched: true, isLoading: false });
-            } else {
-                set({ error: 'Failed to fetch orders', isLoading: false });
-            }
+            if (!response.ok) throw new Error('Failed to fetch orders');
+
+            const data = await response.json();
+            const ordersData = data.data.map(order => ({
+                ...order,
+                id: order._id
+            }));
+
+            const latest = ordersData[0]?.createdAt || null;
+
+            set({
+                orders: ordersData,
+                hasFetched: true,
+                isLoading: false,
+                lastOrderTime: latest, 
+            });
         } catch (error) {
             set({ error: error.message, isLoading: false });
+        }
+    },
+
+    checkNewOrders: async () => {
+        try {
+            const res = await fetch('/api/orders/latest');
+            const data = await res.json();
+
+            const { lastOrderTime } = get();
+
+            if (data.lastOrderTime !== lastOrderTime) {
+                await get().fetchOrders(true);
+            }
+        } catch (error) {
+            console.error("Error checking new orders:", error);
         }
     },
 

@@ -96,23 +96,8 @@ export async function GET(request) {
     await requireAdmin(request);
     await connectDB();
     
-    const { searchParams } = new URL(request.url);
-    const userId = searchParams.get('userId');
-    const status = searchParams.get('status');
-    
-    let query = {};
-    
-    if (userId) {
-      query.userId = userId;
-    }
-    
-    if (status) {
-      query.status = status.toLowerCase();
-    }
-    
-    const orders = await Order.find(query)
+    const orders = await Order.find()
       .sort({ createdAt: -1 })
-      .limit(50)
       .lean();
     
     return NextResponse.json({ success: true, data: orders });
