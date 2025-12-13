@@ -24,7 +24,9 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <StoreInitializer />
-        <ClerkProvider>
+        <ClerkProvider 
+          publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || 'pk_test_placeholder'}
+        >
           {children}
         </ClerkProvider>
       </body>
