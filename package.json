@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "next dev --port 4010",
     "build": "next build",
-    "start": "node --max-old-space-size=1024 server.js",
-    "start:standalone": "node --max-old-space-size=1024 .next/standalone/server.js",
+    "start": "node --max-old-space-size=384 server.js",
+    "start:standalone": "node --max-old-space-size=384 .next/standalone/server.js",
     "lint": "eslint"
   },
   "dependencies": {
