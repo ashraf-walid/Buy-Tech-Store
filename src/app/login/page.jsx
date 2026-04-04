@@ -47,14 +47,19 @@ export default function LoginPage() {
       } else {
         sessionStorage.removeItem("userRole");
         sessionStorage.removeItem("isAuthenticated");
-        setError(data.message || "Login failed. Please check your credentials.");
-        throw new Error(data.message || "Login failed");
+        const errorMessage = data.message || data.error || "Login failed. Please check your credentials.";
+        setError(errorMessage);
+        throw new Error(errorMessage);
       }
     } catch (err) {
-      console.error("Login error:", err);
+      console.error("Login error details:", err);
       sessionStorage.removeItem("userRole");
       sessionStorage.removeItem("isAuthenticated");
-      setError("Network error. Please try again later.");
+      if (err.message.includes("Failed to fetch")) {
+        setError("تعذر الاتصال بالسيرفر. يرجى التحقق من اتصال الإنترنت.");
+      } else {
+        setError(err.message || "حدث خطأ غير متوقع. يرجى المحاولة لاحقاً.");
+      }
     } finally {
       setIsSubmitting(false);
     }

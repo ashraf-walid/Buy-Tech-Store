@@ -123,11 +123,32 @@ export default function AddProduct() {
         try {
             const { mainImageUrl, galleryUrls } = await uploadImages();
 
+            // Prepare the product data, removing any properties that shouldn't be sent as empty strings
+            const { image, images, ...restOfData } = productData;
+
             const productToSend = {
-                ...productData,
-                image: mainImageUrl || null,
-                images: galleryUrls || [],
+                ...restOfData,
+                image: mainImageUrl || undefined,
+                images: galleryUrls && galleryUrls.length > 0 ? galleryUrls : [],
             };
+
+            // Clean up specs if they are mostly empty
+            if (productToSend.specs) {
+                // Ensure null values are handled correctly for Mongoose Number types
+                const cleanSpecs = (obj) => {
+                    const newObj = { ...obj };
+                    Object.keys(newObj).forEach(key => {
+                        if (newObj[key] === "" || newObj[key] === null) {
+                            delete newObj[key];
+                        } else if (typeof newObj[key] === 'object' && !Array.isArray(newObj[key])) {
+                            newObj[key] = cleanSpecs(newObj[key]);
+                            if (Object.keys(newObj[key]).length === 0) delete newObj[key];
+                        }
+                    });
+                    return newObj;
+                };
+                // productToSend.specs = cleanSpecs(productToSend.specs);
+            }
 
             const response = await fetch("/api/products", {
                 method: "POST",

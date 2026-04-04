@@ -6,13 +6,19 @@
   };
   
   export function setCache(key, value) {
+    // Cache temporarily disabled
+    /*
     cache.data.set(key, {
       value,
       expiry: Date.now() + cache.ttl,
     });
+    */
   }
   
   export function getCache(key) {
+    // Cache temporarily disabled
+    return null;
+    /*
     const entry = cache.data.get(key);
     if (!entry) return null;
   
@@ -22,13 +28,16 @@
     }
   
     return entry.value;
+    */
   }
   
   export function deleteCache(key) {
-    cache.data.delete(key);
+    // Cache temporarily disabled
+    // cache.data.delete(key);
   }
   
   export function clearAllCache() {
-    cache.data.clear();
+    // Cache temporarily disabled
+    // cache.data.clear();
   }
   
